@@ -16,7 +16,7 @@ function App() {
   const fetchImages = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/images");
+      const response = await fetch(`${process.env.REACT_APP_BE_URL}/images`);
       if (response.ok) {
         const imagesArray = await response.json();
         setImages(imagesArray);
@@ -45,7 +45,7 @@ function App() {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const response = await fetch(`http://localhost:5000/images/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_BE_URL}/images/${id}`, {
         method: "PUT",
         body: formData,
       });
@@ -62,7 +62,7 @@ function App() {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5000/images", {
+      const res = await fetch(`${process.env.REACT_APP_BE_URL}/images`, {
         method: "POST",
         body: formData,
       });

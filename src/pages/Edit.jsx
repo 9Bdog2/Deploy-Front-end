@@ -11,7 +11,7 @@ const Editor = React.forwardRef((props, ref) => {
   const fetchImageById = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/images/${params.id}`);
+      const response = await fetch(`${process.env.REACT_APP_BE_URL}/images/${params.id}`);
       if (response.ok) {
         const image = await response.json();
         setImage(image.data);
