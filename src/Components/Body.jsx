@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 
 const Body = () => {
   const [products, setProducts] = useState([]);
-  
 
   const getProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/products", {
+      const response = await fetch(`${process.env.REACT_APP_BE_URL}/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -16,7 +15,6 @@ const Body = () => {
       const body = await response.json();
       console.log(body);
       setProducts(body);
-     
     } catch (error) {
       console.error(error);
     }
