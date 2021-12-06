@@ -1,106 +1,20 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from "./components/Navbar/NavBar";
-import Edit from "./pages/Edit";
-import Gallery from "./pages/Gallery";
 import "./App.css";
-import { dataURLtoFile } from "./utils/image";
-import { createRef, useEffect, useState } from "react";
+import NavBar from "./Components/NavBar";
+import Backoffice from "./Components/Backoffice";
+import Body from "./Components/Body";
+import DetailsPage from "./Components/DetailsPage";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 function App() {
-  const editor = createRef();
-  const fileInput = createRef();
-
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchImages = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_BE_URL}/images`);
-      if (response.ok) {
-        const imagesArray = await response.json();
-        setImages(imagesArray);
-        console.log(imagesArray);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  useEffect(() => {
-    if (editor.current) {
-      console.log(editor);
-    }
-  }, [editor]);
-
-  const onSave = async (id, callback) => {
-    const base64 = editor.current.imageEditorInst.toDataURL();
-    const file = dataURLtoFile(base64, "image.png");
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BE_URL}/images/${id}`, {
-        method: "PUT",
-        body: formData,
-      });
-      if (response.ok) {
-        console.log("image is updated");
-        callback();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const onChange = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const res = await fetch(`${process.env.REACT_APP_BE_URL}/images`, {
-        method: "POST",
-        body: formData,
-      });
-      if (res.ok) {
-        const data = await res.json();
-        console.log(data);
-        fetchImages();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const onUplaod = () => {
-    fileInput.current.click();
-  };
   return (
     <div className="App">
+      <NavBar />
       <Router>
-        <NavBar onUpload={onUplaod} onSave={onSave} />
-        <input
-          onChange={onChange}
-          ref={fileInput}
-          type="file"
-          accept="image/png"
-          hidden
-        />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => <Gallery images={images} loading={loading} />}
-          />
-          <Route
-            path="/edit/:id"
-            exact
-            render={(props) => <Edit {...props} ref={editor} />}
-          />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Body />} />
+          <Route path="/backoffice" element={<Backoffice />} />
+          <Route path="/detailsPage/:productId" element={<DetailsPage />} />
+        </Routes>
       </Router>
     </div>
   );
