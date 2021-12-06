@@ -13,7 +13,7 @@ const Backoffice = () => {
   const newProduct = { name, description, brand, price, category };
   const navigate = useNavigate();
 
-  const url = "http://localhost:3001/products";
+  const url = `${process.env.REACT_APP_BE_URL}/products`;
   const request = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const Backoffice = () => {
     formData.append("image", image);
     try {
       const response = await fetch(
-        `http://localhost:3001/products/${data.id}/uploadImage`,
+        `${process.env.REACT_APP_BE_URL}/products/${data.id}/uploadImage`,
         {
           method: "POST",
           body: formData,
@@ -93,7 +93,7 @@ const Backoffice = () => {
               placeholder="Brand"
               required
               value={brand}
-             onChange={(event) => setBrand(event.target.value)}
+              onChange={(event) => setBrand(event.target.value)}
             />
           </div>
           <div className="form-group">
@@ -105,7 +105,7 @@ const Backoffice = () => {
               id="image"
               placeholder="Image Link - https://source.unsplash.com/random/800x600"
               required
-              />
+            />
           </div>
           <div className="form-group">
             <label htmlFor="price">Price</label>
@@ -128,21 +128,23 @@ const Backoffice = () => {
               placeholder="Category"
               required
               value={category}
-              onChange={(event) => setCategory(event.target.value)}/>
+              onChange={(event) => setCategory(event.target.value)}
+            />
           </div>
           <div className="d-flex justify-content-between btn-area">
             <div className="creation">
-              <button type="submit"  className="btn btn-success create-edit">Create</button>
+              <button type="submit" className="btn btn-success create-edit">
+                Create
+              </button>
               <button type="reset" className="btn btn-warning ml-auto">
                 Clear
               </button>
             </div>
-            <div className="deletion"></div>
           </div>
         </form>
       </div>
     </>
   );
-}
+};
 
-export default Backoffice
+export default Backoffice;

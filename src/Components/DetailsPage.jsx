@@ -23,7 +23,7 @@ const DetailsPage = () => {
   const getProducts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/products/" + productId,
+        `${process.env.REACT_APP_BE_URL}/products` + productId,
         {
           method: "GET",
           headers: {
@@ -52,7 +52,7 @@ const DetailsPage = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3001/products/" + productId,
+        `${process.env.REACT_APP_BE_URL}/products` + productId,
         {
           method: "DELETE",
         }
@@ -69,7 +69,7 @@ const DetailsPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/products/" + productId,
+        `${process.env.REACT_APP_BE_URL}/products` + productId,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -5,7 +5,7 @@ const Body = () => {
 
   const getProducts = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BE_URL}products`, {
+      const response = await fetch(`${process.env.REACT_APP_BE_URL}/products`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
