@@ -132,9 +132,6 @@ const Backoffice = () => {
           </div>
           <div className="d-flex justify-content-between btn-area">
             <div className="creation">
-              <button type="submit" className="btn btn-success create-edit">
-                Create
-              </button>
               <button type="submit"  className="btn btn-success create-edit">Create</button>
               <button type="reset" className="btn btn-warning ml-auto">
                 Clear
